@@ -1,8 +1,7 @@
-package grafic;
+package View;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,10 +10,7 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /*
  * To change this template, choose Tools | Templates
@@ -26,12 +22,6 @@ import javax.swing.SwingUtilities;
  */
 public class GraphPanel extends JPanel {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private int width = 800;
-    private int heigth = 400;
     private int padding = 25;
     private int labelPadding = 25;
     private Color lineColor = new Color(44, 102, 230, 180);
@@ -106,8 +96,8 @@ public class GraphPanel extends JPanel {
         }
 
         // create x and y axes 
-        g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, padding + labelPadding, padding);
-        g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, getWidth() - padding, getHeight() - padding - labelPadding);
+        g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, padding + labelPadding, padding); // y axi
+        g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, getWidth() - padding, getHeight() - padding - labelPadding); // x axi
 
         Stroke oldStroke = g2.getStroke();
         g2.setColor(lineColor);
@@ -131,15 +121,10 @@ public class GraphPanel extends JPanel {
         }
     }
 
-//    @Override
-//    public Dimension getPreferredSize() {
-//        return new Dimension(width, heigth);
-//    }
-
     private double getMinScore() {
         double minScore = Double.MAX_VALUE;
         for (Double score : scores) {
-            minScore = Math.min(minScore, score);
+            minScore = Math.min(minScore, score) - 1;
         }
         return minScore;
     }
@@ -147,7 +132,7 @@ public class GraphPanel extends JPanel {
     private double getMaxScore() {
         double maxScore = Double.MIN_VALUE;
         for (Double score : scores) {
-            maxScore = Math.max(maxScore, score);
+            maxScore = Math.max(maxScore, score) + 1;
         }
         return maxScore;
     }
@@ -162,30 +147,4 @@ public class GraphPanel extends JPanel {
         return scores;
     }
     
-    private static void createAndShowGui() {
-        List<Double> scores = new ArrayList<>();
-        Random random = new Random();
-        int maxDataPoints = 40;
-        int maxScore = 10;
-        for (int i = 0; i < maxDataPoints; i++) {
-            scores.add((double) random.nextDouble() * maxScore);
-//            scores.add((double) i);
-        }
-        GraphPanel mainPanel = new GraphPanel(scores);
-        mainPanel.setPreferredSize(new Dimension(800, 600));
-        JFrame frame = new JFrame("DrawGraph");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(mainPanel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
-    
-    public static void main(String[] args) {
-      SwingUtilities.invokeLater(new Runnable() {
-         public void run() {
-            createAndShowGui();
-         }
-      });
-   }
 }
