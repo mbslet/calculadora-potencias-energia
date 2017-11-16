@@ -267,9 +267,13 @@ public class UC3{
                     getAmplitude_H5()*Math.cos((getOrdem_H5()*w*t) + getAngulo_H5()) +
                     getAmplitude_H6()*Math.cos((getOrdem_H6()*w*t) + getAngulo_H6())          
             );
+            t += 0.0005;
         }
         return (lista_DistResultante);
     }
+
+
+
     
     
 }

@@ -3,7 +3,6 @@ package View;
 import Model.UC3;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -11,19 +10,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
 import javax.swing.JTextArea;
 import java.awt.Font;
 
@@ -40,10 +34,7 @@ public class UC3Swing extends JFrame {
 	private GraphPanel graficoNHarmonico6;
 	private GraphPanel graficoResultante;
 	
-	private JPanel contentPane, panel_NHarmonicos1, panel_NHarmonicos2, panel_NHarmonicos3,
-					panel_NHarmonicos4, panel_NHarmonicos5, panel_NHarmonicos6, 
-					panel_NHarmonicosDados1, panel_NHarmonicosDados2, panel_NHarmonicosDados3,
-					panel_NHarmonicosDados4, panel_NHarmonicosDados5, panel_NHarmonicosDados6;
+	private JPanel contentPane;
 	
 	private JTextField AmplitudeFundamental;
 	private JTextField AnguloFundamental;
@@ -285,9 +276,7 @@ public class UC3Swing extends JFrame {
 					catch(NumberFormatException err) {
 						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					catch(IllegalArgumentException err) {
-						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-					}
+				
 					
 				}
 				
@@ -675,6 +664,7 @@ public class UC3Swing extends JFrame {
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				
 			}
 			
 			

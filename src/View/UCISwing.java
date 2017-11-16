@@ -66,8 +66,16 @@ public class UCISwing extends JFrame {
 		JButton btnCaso_1 = new JButton("Distorção Harmônica");
 		btnCaso_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UC3Swing frame = new UC3Swing();
-				frame.setVisible(true);
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							UC3Swing frame = new UC3Swing();
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		btnCaso_1.setBounds(104, 136, 377, 55);

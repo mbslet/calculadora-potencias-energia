@@ -1,7 +1,5 @@
 package Model;
 
-import View.UC2Swing;
-
 import java.util.ArrayList;
 
 public class UC2 {
@@ -132,5 +130,8 @@ public class UC2 {
 		
 		
 	}
+
+
+	
 }
 	

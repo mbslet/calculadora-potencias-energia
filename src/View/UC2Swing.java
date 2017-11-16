@@ -1,27 +1,19 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Model.UC2;
 
-import java.awt.FlowLayout;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.JTextArea;
 import javax.swing.JLabel;
-import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
 import java.awt.GridLayout;
 import java.awt.Font;
 
