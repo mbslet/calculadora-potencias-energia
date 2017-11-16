@@ -1,5 +1,7 @@
 package View;
 
+import Model.UC3;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
@@ -11,6 +13,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
@@ -24,6 +28,8 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 
 public class UC3Swing extends JFrame {
+	
+	UC3 c3;
 
 	private GraphPanel graficoFundamental;
 	private GraphPanel graficoNHarmonico1;
@@ -32,9 +38,13 @@ public class UC3Swing extends JFrame {
 	private GraphPanel graficoNHarmonico4;
 	private GraphPanel graficoNHarmonico5;
 	private GraphPanel graficoNHarmonico6;
-	private GraphPanel graficoResultado;
+	private GraphPanel graficoResultante;
 	
-	private JPanel contentPane;
+	private JPanel contentPane, panel_NHarmonicos1, panel_NHarmonicos2, panel_NHarmonicos3,
+					panel_NHarmonicos4, panel_NHarmonicos5, panel_NHarmonicos6, 
+					panel_NHarmonicosDados1, panel_NHarmonicosDados2, panel_NHarmonicosDados3,
+					panel_NHarmonicosDados4, panel_NHarmonicosDados5, panel_NHarmonicosDados6;
+	
 	private JTextField AmplitudeFundamental;
 	private JTextField AnguloFundamental;
 	private JTextField AmplitudeH1, AmplitudeH2, AmplitudeH3, AmplitudeH4, AmplitudeH5, AmplitudeH6;
@@ -50,7 +60,11 @@ public class UC3Swing extends JFrame {
 	 * Create the frame.
 	 */
 	public UC3Swing() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		
+		c3 = new UC3();
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 1500, 1500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -101,178 +115,56 @@ public class UC3Swing extends JFrame {
 		JButton btnEnviar = new JButton("Enviar");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				double variavelAmplitudeFundamental = Double.parseDouble(AmplitudeFundamental.getText());
-				double variavelAnguloFundamental = Double.parseDouble(AnguloFundamental.getText());
+				
+				try {
+					double variavelAmplitudeFundamental = Double.parseDouble(AmplitudeFundamental.getText());
+					double variavelAnguloFundamental = Double.parseDouble(AnguloFundamental.getText());
+					
+					c3.setAmplitude_tensao(variavelAmplitudeFundamental);
+					c3.setAmplitude_tensao(variavelAnguloFundamental);
+					graficoFundamental.setScores(c3.f_Onda_Tensao());
+					}
+					catch(NumberFormatException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch(IllegalArgumentException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					
+				}
 				
 				
-			}
+			
 		});
-		btnEnviar.setBounds(65, 210, 117, 25);
+		btnEnviar.setBounds(57, 190, 87, 25);
 		panelValoresUC3.add(btnEnviar);
 		
 		JRadioButton rdbtnmpares = new JRadioButton("Ímpares");
-		rdbtnmpares.setBounds(495, 131, 87, 23);
+		rdbtnmpares.setBounds(489, 87, 87, 23);
 		panelValoresUC3.add(rdbtnmpares);
 		
 		JRadioButton rdbtnPares = new JRadioButton("Pares");
-		rdbtnPares.setBounds(594, 131, 75, 23);
+		rdbtnPares.setBounds(580, 87, 75, 23);
 		panelValoresUC3.add(rdbtnPares);
 		
 		JLabel lblNewLabel_1 = new JLabel(" Harmônicos:");
-		lblNewLabel_1.setBounds(551, 108, 99, 15);
+		lblNewLabel_1.setBounds(530, 52, 99, 15);
 		panelValoresUC3.add(lblNewLabel_1);
 	
 		JComboBox N_Harmonicos = new JComboBox<Double>();
-		N_Harmonicos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (int i = 1; i < 7; i++){
-		            N_Harmonicos.addItem(i);
-		        }
-				Object escolhe = N_Harmonicos.getSelectedItem();
-				 
-				
-				 
-				 if(escolhe.toString().equals("1")) {
-					 	AmplitudeH1.setEnabled(true);
-					 	AnguloH1.setEnabled(true);
-						OrdemH1.setEnabled(true);
-						AmplitudeH2.setEnabled(false);
-						AnguloH2.setEnabled(false);
-						OrdemH2.setEnabled(false);
-						AmplitudeH3.setEnabled(false);
-						AnguloH3.setEnabled(false);
-						OrdemH3.setEnabled(false);
-						AmplitudeH4.setEnabled(false);
-						AnguloH4.setEnabled(false);
-						OrdemH4.setEnabled(false);
-						AmplitudeH5.setEnabled(false);
-						AnguloH5.setEnabled(false);
-						OrdemH5.setEnabled(false);
-						AmplitudeH6.setEnabled(false);
-						AnguloH6.setEnabled(false);
-						OrdemH6.setEnabled(false);
+		for (int i = 1; i < 7; i++){
+            N_Harmonicos.addItem(i);
+            
+		}
 
-				 }
-				 
-				 if(escolhe.toString().equals("2")) {
-					 	AmplitudeH1.setEnabled(false);
-					 	AnguloH1.setEnabled(false);
-						OrdemH1.setEnabled(false);
-						AmplitudeH2.setEnabled(true);
-						AnguloH2.setEnabled(true);
-						OrdemH2.setEnabled(true);
-						AmplitudeH3.setEnabled(false);
-						AnguloH3.setEnabled(false);
-						OrdemH3.setEnabled(false);
-						AmplitudeH4.setEnabled(false);
-						AnguloH4.setEnabled(false);
-						OrdemH4.setEnabled(false);
-						AmplitudeH5.setEnabled(false);
-						AnguloH5.setEnabled(false);
-						OrdemH5.setEnabled(false);
-						AmplitudeH6.setEnabled(false);
-						AnguloH6.setEnabled(false);
-						OrdemH6.setEnabled(false);
-
-				 }
-				 
-				 if(escolhe.toString().equals("3")) {
-					 	AmplitudeH1.setEnabled(false);
-					 	AnguloH1.setEnabled(false);
-						OrdemH1.setEnabled(false);
-						AmplitudeH2.setEnabled(false);
-						AnguloH2.setEnabled(false);
-						OrdemH2.setEnabled(false);
-						AmplitudeH3.setEnabled(true);
-						AnguloH3.setEnabled(true);
-						OrdemH3.setEnabled(true);
-						AmplitudeH4.setEnabled(false);
-						AnguloH4.setEnabled(false);
-						OrdemH4.setEnabled(false);
-						AmplitudeH5.setEnabled(false);
-						AnguloH5.setEnabled(false);
-						OrdemH5.setEnabled(false);
-						AmplitudeH6.setEnabled(false);
-						AnguloH6.setEnabled(false);
-						OrdemH6.setEnabled(false);
-
-				 }
-				 
-				 if(escolhe.toString().equals("4")) {
-					 	AmplitudeH1.setEnabled(false);
-					 	AnguloH1.setEnabled(false);
-						OrdemH1.setEnabled(false);
-						AmplitudeH2.setEnabled(false);
-						AnguloH2.setEnabled(false);
-						OrdemH2.setEnabled(false);
-						AmplitudeH3.setEnabled(false);
-						AnguloH3.setEnabled(false);
-						OrdemH3.setEnabled(false);
-						AmplitudeH4.setEnabled(true);
-						AnguloH4.setEnabled(true);
-						OrdemH4.setEnabled(true);
-						AmplitudeH5.setEnabled(false);
-						AnguloH5.setEnabled(false);
-						OrdemH5.setEnabled(false);
-						AmplitudeH6.setEnabled(false);
-						AnguloH6.setEnabled(false);
-						OrdemH6.setEnabled(false);
-
-				 }
-				 
-				 if(escolhe.toString().equals("5")) {
-					 	AmplitudeH1.setEnabled(false);
-					 	AnguloH1.setEnabled(false);
-						OrdemH1.setEnabled(false);
-						AmplitudeH2.setEnabled(false);
-						AnguloH2.setEnabled(false);
-						OrdemH2.setEnabled(false);
-						AmplitudeH3.setEnabled(false);
-						AnguloH3.setEnabled(false);
-						OrdemH3.setEnabled(false);
-						AmplitudeH4.setEnabled(false);
-						AnguloH4.setEnabled(false);
-						OrdemH4.setEnabled(false);
-						AmplitudeH5.setEnabled(true);
-						AnguloH5.setEnabled(true);
-						OrdemH5.setEnabled(true);
-						AmplitudeH6.setEnabled(false);
-						AnguloH6.setEnabled(false);
-						OrdemH6.setEnabled(false);
-
-				 }
-				 
-				 if(escolhe.toString().equals("6")) {
-					 	AmplitudeH1.setEnabled(false);
-					 	AnguloH1.setEnabled(false);
-						OrdemH1.setEnabled(false);
-						AmplitudeH2.setEnabled(false);
-						AnguloH2.setEnabled(false);
-						OrdemH2.setEnabled(false);
-						AmplitudeH3.setEnabled(false);
-						AnguloH3.setEnabled(false);
-						OrdemH3.setEnabled(false);
-						AmplitudeH4.setEnabled(false);
-						AnguloH4.setEnabled(false);
-						OrdemH4.setEnabled(false);
-						AmplitudeH5.setEnabled(false);
-						AnguloH5.setEnabled(false);
-						OrdemH5.setEnabled(false);
-						AmplitudeH6.setEnabled(true);
-						AnguloH6.setEnabled(true);
-						OrdemH6.setEnabled(true);
-
-				 }
-			}
-		});
 		
-		
-		N_Harmonicos.setBounds(653, 196, 38, 24);
+		N_Harmonicos.setBounds(580, 172, 38, 24);
 		panelValoresUC3.add(N_Harmonicos);
 		
-		JLabel lblOrdemHarmnica = new JLabel("Ordem Harmônica:");
-		lblOrdemHarmnica.setBounds(510, 201, 140, 15);
+		JLabel lblOrdemHarmnica = new JLabel("Número de Harmônica:");
+		lblOrdemHarmnica.setBounds(509, 145, 182, 15);
 		panelValoresUC3.add(lblOrdemHarmnica);
+	
 		
 		JPanel panel_Part2 = new JPanel();
 		panelUC3.add(panel_Part2);
@@ -293,10 +185,11 @@ public class UC3Swing extends JFrame {
 		
 		JPanel panel_graficoH1 = new JPanel();
 		panel_NHarmonicos1.add(panel_graficoH1);
-		panel_graficoH1.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_graficoH1.setLayout(null);
 		graficoNHarmonico1=new GraphPanel(new ArrayList<>());
+		graficoNHarmonico1.setBounds(0, -37, 496, 232);
 		panel_graficoH1.add(graficoNHarmonico1);
-		graficoNHarmonico1.setLayout(null);
+		
 		
 		JLabel lblNmeroDeHarmnicos = new JLabel("Número de Harmônicos: 1");
 		lblNmeroDeHarmnicos.setBounds(157, 96, 275, 15);
@@ -310,10 +203,11 @@ public class UC3Swing extends JFrame {
 		
 		JPanel panel_graficoH2 = new JPanel();
 		panel_NHarmonicos2.add(panel_graficoH2);
-		panel_graficoH2.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_graficoH2.setLayout(null);
 		graficoNHarmonico2=new GraphPanel(new ArrayList<>());
+		graficoNHarmonico2.setBounds(0, -22, 496, 199);
 		panel_graficoH2.add(graficoNHarmonico2);
-		graficoNHarmonico2.setLayout(null);
+		
 		
 		JLabel lblNmeroDeHarmnicos2 = new JLabel("Número de Harmônicos: 2");
 		lblNmeroDeHarmnicos2.setBounds(157, 96, 275, 15);
@@ -325,10 +219,11 @@ public class UC3Swing extends JFrame {
 		
 		JPanel panel_graficoH3 = new JPanel();
 		panel_NHarmonicos3.add(panel_graficoH3);
-		panel_graficoH3.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_graficoH3.setLayout(null);
 		graficoNHarmonico3=new GraphPanel(new ArrayList<>());
+		graficoNHarmonico3.setBounds(0, -35, 496, 227);
 		panel_graficoH3.add(graficoNHarmonico3);
-		graficoNHarmonico3.setLayout(null);
+		
 		
 		JLabel lblNmeroDeHarmnicos3 = new JLabel("Número de Harmônicos: 3");
 		lblNmeroDeHarmnicos3.setBounds(157, 96, 275, 15);
@@ -372,10 +267,32 @@ public class UC3Swing extends JFrame {
 		JButton button_H1 = new JButton("Enviar");
 		button_H1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				double variavelAmplitudeH1 = Double.parseDouble(AmplitudeH1.getText());
-				double variavelAnguloH1 = Double.parseDouble(AnguloH1.getText());
-				double variavelOrdemH1 = Double.parseDouble(OrdemH1.getText());
-			}
+				
+				try {
+					double variavelAmplitudeH1 = Double.parseDouble(AmplitudeH1.getText());
+					double variavelAnguloH1 = Double.parseDouble(AnguloH1.getText());
+					double variavelOrdemH1 = Double.parseDouble(OrdemH1.getText());
+					
+					c3.setAmplitude_H1(variavelAmplitudeH1);
+					c3.setAngulo_H1(variavelAnguloH1);
+					c3.setOrdem_H1(variavelOrdemH1);
+					
+					graficoNHarmonico1.setScores(c3.Formas_Harmonicas1());
+					graficoResultante.setScores(c3.Forma_Distorcida_Resultante());
+				}
+					
+					
+					catch(NumberFormatException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch(IllegalArgumentException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					
+				}
+				
+				
+			
 		});
 		button_H1.setBounds(413, 98, 83, 25);
 		panel_NHarmonicosDados1.add(button_H1);
@@ -412,6 +329,31 @@ public class UC3Swing extends JFrame {
 		panel_NHarmonicosDados2.add(lblOrdemDeFase_2);
 		
 		JButton button_H2 = new JButton("Enviar");
+		button_H2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					double variavelAmplitudeH2 = Double.parseDouble(AmplitudeH2.getText());
+					double variavelAnguloH2 = Double.parseDouble(AnguloH2.getText());
+					double variavelOrdemH2 = Double.parseDouble(OrdemH2.getText());
+					
+					c3.setAmplitude_H2(variavelAmplitudeH2);
+					c3.setAngulo_H2(variavelAnguloH2);
+					c3.setOrdem_H2(variavelOrdemH2);
+					
+					graficoNHarmonico2.setScores(c3.Formas_Harmonicas2());
+					graficoResultante.setScores(c3.Forma_Distorcida_Resultante());
+				}
+					
+					
+					catch(NumberFormatException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+			
+					
+					
+				}
+			
+		});
 		button_H2.setBounds(413, 98, 83, 25);
 		panel_NHarmonicosDados2.add(button_H2);
 		
@@ -462,10 +404,11 @@ public class UC3Swing extends JFrame {
 		
 		JPanel panel_graficoH4 = new JPanel();
 		panel_NHarmonicos4.add(panel_graficoH4);
-		panel_graficoH4.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_graficoH4.setLayout(null);
 		graficoNHarmonico4=new GraphPanel(new ArrayList<>());
+		graficoNHarmonico4.setBounds(0, -36, 496, 233);
 		panel_graficoH4.add(graficoNHarmonico4);
-		graficoNHarmonico4.setLayout(null);
+		
 		
 		JLabel lblNmeroDeHarmnicos4 = new JLabel("Número de Harmônicos: 4");
 		lblNmeroDeHarmnicos4.setBounds(157, 96, 275, 15);
@@ -477,10 +420,11 @@ public class UC3Swing extends JFrame {
 		
 		JPanel panel_graficoH5 = new JPanel();
 		panel_NHarmonicos5.add(panel_graficoH5);
-		panel_graficoH5.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_graficoH5.setLayout(null);
 		graficoNHarmonico5=new GraphPanel(new ArrayList<>());
+		graficoNHarmonico5.setBounds(0, -64, 496, 247);
 		panel_graficoH5.add(graficoNHarmonico5);
-		graficoNHarmonico5.setLayout(null);
+		
 		
 		JLabel lblNmeroDeHarmnicos5 = new JLabel("Número de Harmônicos: 5");
 		lblNmeroDeHarmnicos5.setBounds(157, 96, 275, 15);
@@ -492,10 +436,11 @@ public class UC3Swing extends JFrame {
 		
 		JPanel panel_graficoH6 = new JPanel();
 		panel_NHarmonicos6.add(panel_graficoH6);
-		panel_graficoH6.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_graficoH6.setLayout(null);
 		graficoNHarmonico6=new GraphPanel(new ArrayList<>());
+		graficoNHarmonico6.setBounds(0, -32, 496, 216);
 		panel_graficoH6.add(graficoNHarmonico6);
-		graficoNHarmonico6.setLayout(null);
+		
 		
 		JLabel lblNmeroDeHarmnicos6 = new JLabel("Número de Harmônicos: 6");
 		lblNmeroDeHarmnicos6.setBounds(157, 96, 275, 15);
@@ -536,7 +481,29 @@ public class UC3Swing extends JFrame {
 		panel_NHarmonicosDados4.add(lblOrdemDeFase_4);
 		
 		JButton button_H4 = new JButton("Enviar");
-		button_H4.setBounds(367, 87, 117, 25);
+		button_H4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					double variavelAmplitudeH4 = Double.parseDouble(AmplitudeH4.getText());
+					double variavelAnguloH4 = Double.parseDouble(AnguloH4.getText());
+					double variavelOrdemH4 = Double.parseDouble(OrdemH4.getText());
+					
+					c3.setAmplitude_H4(variavelAmplitudeH4);
+					c3.setAngulo_H4(variavelAnguloH4);
+					c3.setOrdem_H4(variavelOrdemH4);
+					
+					graficoNHarmonico4.setScores(c3.Formas_Harmonicas4());
+					graficoResultante.setScores(c3.Forma_Distorcida_Resultante());
+				}
+					
+					
+					catch(NumberFormatException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+			
+			}
+		});
+		button_H4.setBounds(407, 87, 77, 25);
 		panel_NHarmonicosDados4.add(button_H4);
 		
 		JPanel panel_NHarmonicosDados5 = new JPanel();
@@ -571,7 +538,29 @@ public class UC3Swing extends JFrame {
 		panel_NHarmonicosDados5.add(lblOrdemDeFase_5);
 		
 		JButton button_H5 = new JButton("Enviar");
-		button_H5.setBounds(367, 87, 117, 25);
+		button_H5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					double variavelAmplitudeH5 = Double.parseDouble(AmplitudeH5.getText());
+					double variavelAnguloH5 = Double.parseDouble(AnguloH5.getText());
+					double variavelOrdemH5 = Double.parseDouble(OrdemH5.getText());
+					
+					c3.setAmplitude_H5(variavelAmplitudeH5);
+					c3.setAngulo_H5(variavelAnguloH5);
+					c3.setOrdem_H5(variavelOrdemH5);
+					
+					graficoNHarmonico5.setScores(c3.Formas_Harmonicas5());
+					graficoResultante.setScores(c3.Forma_Distorcida_Resultante());
+				}
+					
+					
+					catch(NumberFormatException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+			
+			}
+		});
+		button_H5.setBounds(392, 87, 92, 25);
 		panel_NHarmonicosDados5.add(button_H5);
 		
 		JPanel panel_NHarmonicosDados6 = new JPanel();
@@ -579,11 +568,33 @@ public class UC3Swing extends JFrame {
 		panel_NHarmonicosDados6.setLayout(null);
 		
 		AmplitudeH6 = new JTextField();
-		AmplitudeH6.setBounds(214, 22, 92, 33);
+		AmplitudeH6.setBounds(0, 25, 92, 33);
 		panel_NHarmonicosDados6.add(AmplitudeH6);
 		AmplitudeH6.setColumns(10);
 		
 		JButton button_H3 = new JButton("Enviar");
+		button_H3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					double variavelAmplitudeH3 = Double.parseDouble(AmplitudeH3.getText());
+					double variavelAnguloH3 = Double.parseDouble(AnguloH3.getText());
+					double variavelOrdemH3 = Double.parseDouble(OrdemH3.getText());
+					
+					c3.setAmplitude_H3(variavelAmplitudeH3);
+					c3.setAngulo_H3(variavelAnguloH3);
+					c3.setOrdem_H3(variavelOrdemH3);
+					
+					graficoNHarmonico3.setScores(c3.Formas_Harmonicas3());
+					graficoResultante.setScores(c3.Forma_Distorcida_Resultante());
+				}
+					
+					
+					catch(NumberFormatException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+			
+			}
+		});
 		button_H3.setBounds(413, 98, 83, 25);
 		panel_NHarmonicosDados3.add(button_H3);
 		
@@ -610,7 +621,29 @@ public class UC3Swing extends JFrame {
 		panel_NHarmonicosDados6.add(lblOrdemDeFase_6);
 		
 		JButton button_H6 = new JButton("Enviar");
-		button_H6.setBounds(367, 87, 117, 25);
+		button_H6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					double variavelAmplitudeH6 = Double.parseDouble(AmplitudeH6.getText());
+					double variavelAnguloH6 = Double.parseDouble(AnguloH6.getText());
+					double variavelOrdemH6 = Double.parseDouble(OrdemH6.getText());
+					
+					c3.setAmplitude_H6(variavelAmplitudeH6);
+					c3.setAngulo_H6(variavelAnguloH6);
+					c3.setOrdem_H6(variavelOrdemH6);
+					
+					graficoNHarmonico6.setScores(c3.Formas_Harmonicas6());
+					graficoResultante.setScores(c3.Forma_Distorcida_Resultante());
+				}
+					
+					
+					catch(NumberFormatException err) {
+						JOptionPane.showMessageDialog(null, err.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+			
+			}
+		});
+		button_H6.setBounds(392, 82, 92, 25);
 		panel_NHarmonicosDados6.add(button_H6);
 		
 		JPanel panel_Resultado = new JPanel();
@@ -620,9 +653,9 @@ public class UC3Swing extends JFrame {
 		JPanel panel_GraficoResultado = new JPanel();
 		panel_Resultado.add(panel_GraficoResultado);
 		panel_GraficoResultado.setLayout(new GridLayout(1, 0, 0, 0));
-		graficoResultado=new GraphPanel(new ArrayList<>());
-		panel_GraficoResultado.add(graficoResultado);
-		graficoResultado.setLayout(null);
+		graficoResultante=new GraphPanel(new ArrayList<>());
+		panel_GraficoResultado.add(graficoResultante);
+		graficoResultante.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel_Resultado.add(panel);
@@ -637,5 +670,20 @@ public class UC3Swing extends JFrame {
 		lblNewLabel.setFont(new Font("DejaVu Serif Condensed", Font.ITALIC, 16));
 		lblNewLabel.setBounds(221, 31, 345, 57);
 		panel.add(lblNewLabel);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+			
+			
+		});
+		btnVoltar.setBounds(616, 210, 117, 25);
+		panel.add(btnVoltar);
+		
+		
+		 
 	}
+	
 }
